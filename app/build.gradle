@@ -43,13 +43,11 @@ android {
             }
         } else {
             release {
-                def keystore = "${project.gradle.gradleUserHomeDir}/../.android/debug.keystore"
-                out.style(Style.Normal).text("I run local using ")
-                        .style(Style.SuccessHeader).println("  $keystore")
-                storePassword "android"
-                keyPassword "android"
-                keyAlias "androiddebugkey"
-                storeFile file(keystore)
+                out.style(Style.Normal).text("I run on Github actions")
+                storeFile file('../signing/release.keystore')
+                storePassword System.getenv("KEYSTORE_PASS")
+                keyAlias System.getenv("ALIAS_NAME")
+                keyPassword System.getenv("ALIAS_PASS")
             }
         }
     }

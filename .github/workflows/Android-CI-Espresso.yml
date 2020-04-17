@@ -21,7 +21,7 @@ jobs:
       - name: Install coreutils for macOS
         run: brew install coreutils
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Check Gradle checksum
         run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ZacSweers/check-gradle-checksums/master/check-gradle-checksums.sh)"
       - name: Install JDK ${{ matrix.java_version }}
@@ -37,6 +37,15 @@ jobs:
         run: ./signing/decrypt.sh
         env:
           CRYPT_PASS: ${{ secrets.CRYPT_PASS }}
+      - shell: bash
+        run: mkdir toolchains
+      - name: specify NDK
+        uses: ravinderjangra/android-ndk-toolchain-setup@0.1
+        with:
+          api: '21'
+          arch: 'x86'
+          install-location: 'toolchains'
+          force: true
       - name: Build project
         run: ./gradlew clean build --stacktrace
         env:

@@ -11,19 +11,19 @@ on:
 jobs:
   build:
     name: JDK ${{ matrix.java_version }}
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         java_version: [1.8]
     steps:
       # In order to have sha256sum on macOS, we need to install coreutils first
       # Use this until coreutils or sha256sum are natively included in macOS on actions https://github.com/actions/virtual-environments/issues/90
-      - name: Install coreutils for macOS
-        run: brew install coreutils
+#      - name: Install coreutils for macOS
+#        run: brew install coreutils
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Check Gradle checksum
-        run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ZacSweers/check-gradle-checksums/master/check-gradle-checksums.sh)"
+#      - name: Check Gradle checksum
+#        run: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ZacSweers/check-gradle-checksums/master/check-gradle-checksums.sh)"
       - name: Install JDK ${{ matrix.java_version }}
         uses: actions/setup-java@v1
         with:

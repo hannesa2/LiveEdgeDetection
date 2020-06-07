@@ -71,7 +71,16 @@ android {
     }
 
     applicationVariants.all { variant ->
-        setOutputFileName(variant, project)
+        variant.outputs.all { output ->
+            def builtType = variant.buildType.name
+            def vName = variant.versionName
+            def vCode = variant.versionCode
+            // def flavor = variant.flavorName
+            def newName = "LiveEdgeDetection"
+            newName += "-${vName}-${vCode}-${builtType}.apk"
+            outputFileName = newName
+            println "$variant.name: newName is $newName"
+        }
     }
 
 }
@@ -94,28 +103,6 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation "androidx.core:core-ktx:1.3.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-}
-
-def setOutputFileName(variant, callerProject) {
-    logger.info("Setting new name for output of variant $variant.name")
-
-    def originalFile = variant.outputs[0].outputFile
-    def originalName = originalFile.name
-    println "originalName=$originalName variant.name=$variant.name"
-
-    def newName = "LiveEdgeDetection"
-
-    def versionName = "$variant.mergedFlavor.versionName"
-    def versionCode = "$variant.mergedFlavor.versionCode".toInteger()
-    newName += "_$versionName-$versionCode"
-
-    newName += originalName.substring(callerProject.archivesBaseName.length())
-
-    println "$variant.name: newName is $newName"
-
-    variant.outputs.all {
-        outputFileName = new File(".", newName)
-    }
 }
 
 static def getGitOriginRemote() {

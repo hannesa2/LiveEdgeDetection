@@ -10,6 +10,35 @@
       "client_info": {
         "mobilesdk_app_id": "1:1234:android:1234",
         "android_client_info": {
+          "package_name": "info.hannes.liveedgedetection.demo.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1234-1234.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "1234"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1234-1234.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1234:android:1234",
+        "android_client_info": {
           "package_name": "info.hannes.liveedgedetection.demo"
         }
       },

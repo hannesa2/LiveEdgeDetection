@@ -57,6 +57,12 @@ jobs:
         with:
           name: LiveEdgeDetection-Espresso-report
           path: app/build/reports/androidTests/connected
+      - name: Save logcat output
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: LiveEdgeDetection-logcat
+          path: artifacts/logcat.log
   Check:
     name: Check
     runs-on: ubuntu-latest

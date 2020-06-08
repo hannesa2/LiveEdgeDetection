@@ -11,9 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.2.0
         with:
           fetch-depth: 0
+      - name: Show tags
+        run: git tag -n
+      - name: generate tags
+        run: git describe --abbrev=0
+      - name: git fetch
+        run: git fetch --all
+      - name: generate tags
+        run: git describe --abbrev=0
+      - name: show log
+        run: git log --oneline
       - name: Install JDK ${{ matrix.java_version }}
         uses: actions/setup-java@v1
         with:

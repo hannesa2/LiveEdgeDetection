@@ -32,6 +32,7 @@ import info.hannes.liveedgedetection.ImageDetectionProperties;
 import info.hannes.liveedgedetection.ScanConstants;
 import info.hannes.liveedgedetection.ScanHint;
 import info.hannes.liveedgedetection.ScanUtils;
+import timber.log.Timber;
 
 import static org.opencv.core.CvType.CV_8UC1;
 
@@ -40,7 +41,7 @@ import static org.opencv.core.CvType.CV_8UC1;
  */
 
 public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callback {
-    private static final String TAG = ScanSurfaceView.class.getSimpleName();
+
     SurfaceView mSurfaceView;
     private final info.hannes.liveedgedetection.view.ScanCanvasView scanCanvasView;
     private int vWidth = 0;
@@ -75,7 +76,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
             openCamera();
             this.camera.setPreviewDisplay(holder);
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage(), e);
+            Timber.e(e);
         }
     }
 
@@ -167,7 +168,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
             if (null != camera) {
                 try {
                     Camera.Size pictureSize = camera.getParameters().getPreviewSize();
-                    Log.d(TAG, "onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height);
+                    Timber.d("onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height);
 
                     Mat yuv = new Mat(new Size(pictureSize.width, pictureSize.height * 1.5), CV_8UC1);
                     yuv.put(0, 0, data);
@@ -190,6 +191,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
                         showFindingReceiptHint();
                     }
                 } catch (Exception e) {
+                    Timber.e(e);
                     showFindingReceiptHint();
                 }
             }
@@ -202,8 +204,8 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
         float previewWidth = (float) stdSize.height;
         float previewHeight = (float) stdSize.width;
 
-        Log.i(TAG, "previewWidth: " + previewWidth);
-        Log.i(TAG, "previewHeight: " + previewHeight);
+        Timber.i("previewWidth: %s", previewWidth);
+        Timber.i("previewHeight: %s", previewHeight);
 
         //Points are drawn in anticlockwise direction
         path.moveTo(previewWidth - (float) points[0].y, (float) points[0].x);
@@ -213,7 +215,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
         path.close();
 
         double area = Math.abs(Imgproc.contourArea(approx));
-        Log.i(TAG, "Contour Area: " + area);
+        Timber.i("Contour Area: %s", area);
 
         PathShape newBox = new PathShape(path, previewWidth, previewHeight);
         Paint paint = new Paint();
@@ -231,8 +233,8 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
         if (bottomWidth > resultWidth)
             resultWidth = bottomWidth;
 
-        Log.i(TAG, "resultWidth: " + resultWidth);
-        Log.i(TAG, "resultHeight: " + resultHeight);
+        Timber.i("resultWidth: " + resultWidth);
+        Timber.i("resultHeight: " + resultHeight);
 
         ImageDetectionProperties imgDetectionPropsObj
                 = new ImageDetectionProperties(previewWidth, previewHeight, resultWidth, resultHeight,
@@ -264,7 +266,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
                 cancelAutoCapture();
                 scanHint = ScanHint.ADJUST_ANGLE;
             } else {
-                Log.i(TAG, "GREEN" + "(resultWidth/resultHeight) > 4: " + (resultWidth / resultHeight) +
+                Timber.i("GREEN" + "(resultWidth/resultHeight) > 4: " + (resultWidth / resultHeight) +
                         " points[0].x == 0 && points[3].x == 0: " + points[0].x + ": " + points[3].x +
                         " points[2].x == previewHeight && points[1].x == previewHeight: " + points[2].x + ": " + points[1].x +
                         "previewHeight: " + previewHeight);
@@ -276,7 +278,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
                 }
             }
         }
-        Log.i(TAG, "Preview Area 95%: " + 0.95 * previewArea +
+        Timber.i("Preview Area 95%: " + 0.95 * previewArea +
                 " Preview Area 20%: " + 0.20 * previewArea +
                 " Area: " + area +
                 " Label: " + scanHint.toString());
@@ -297,7 +299,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
                 if (Math.round((float) millisUntilFinished / 1000.0f) != secondsLeft) {
                     secondsLeft = Math.round((float) millisUntilFinished / 1000.0f);
                 }
-                Log.v(TAG, "" + millisUntilFinished / 1000);
+                Timber.v("" + millisUntilFinished / 1000);
                 switch (secondsLeft) {
                     case 1:
                         autoCapture(scanHint);
@@ -438,7 +440,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
                     previewHeight = previewSize.width;
                 }
 
-                Log.d(TAG, "previewWidth:" + previewWidth + " previewHeight:" + previewHeight);
+                Timber.d("previewWidth:" + previewWidth + " previewHeight:" + previewHeight);
             }
 
             int nW;
@@ -450,14 +452,14 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
 
             // Center the child SurfaceView within the parent.
             if (width * previewHeight < height * previewWidth) {
-                Log.d(TAG, "center horizontally");
+                Timber.d("center horizontally");
                 int scaledChildWidth = (int) ((previewWidth * height / previewHeight) * scale);
                 nW = (width + scaledChildWidth) / 2;
                 nH = (int) (height * scale);
                 top = 0;
                 left = (width - scaledChildWidth) / 2;
             } else {
-                Log.d(TAG, "center vertically");
+                Timber.d("center vertically");
                 int scaledChildHeight = (int) ((previewHeight * width / previewWidth) * scale);
                 nW = (int) (width * scale);
                 nH = (height + scaledChildHeight) / 2;

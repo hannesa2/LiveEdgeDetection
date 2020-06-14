@@ -45,7 +45,7 @@ jobs:
         uses: malinskiy/action-android/emulator-run-cmd@release/0.0.7
         with:
           cmd: ./gradlew cAT --stacktrace
-          api: 21
+          api: 28
           tag: default
           abi: x86
       - name: Archive Espresso results
@@ -59,6 +59,13 @@ jobs:
         with:
           name: LiveEdgeDetection-logcat
           path: artifacts/logcat.log
+      - name: png-find
+        run: find screenshots -name '*.png'
+      - name: Archive screenshots
+        uses: actions/upload-artifact@v1
+        with:
+          name: LiveEdgeDetection-Screenshots
+          path: screenshots/adb
   Check:
     name: Check
     runs-on: ubuntu-latest

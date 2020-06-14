@@ -18,11 +18,12 @@ class SmokeTest {
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
             Manifest.permission.READ_EXTERNAL_STORAGE)
 
     @Test
     fun smokeTestSimplyStart() {
-        Thread.sleep(1000)
+        Thread.sleep(10000)
         Screenshot.takeScreenshot("End")
     }
 }

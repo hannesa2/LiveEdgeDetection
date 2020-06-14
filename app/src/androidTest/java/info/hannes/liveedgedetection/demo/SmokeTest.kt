@@ -23,7 +23,9 @@ class SmokeTest {
 
     @Test
     fun smokeTestSimplyStart() {
-        Thread.sleep(10000)
-        Screenshot.takeScreenshot("End")
+        for (i in 1000L..10000L step 500) {
+            Thread.sleep(i)
+            Screenshot.takeScreenshot("$i")
+        }
     }
 }

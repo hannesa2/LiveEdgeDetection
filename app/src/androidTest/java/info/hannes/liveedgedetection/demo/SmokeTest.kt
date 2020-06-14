@@ -22,7 +22,7 @@ class SmokeTest {
 
     @Test
     fun smokeTestSimplyStart() {
-        Thread.sleep(1000)
+        Thread.sleep(10000)
         Screenshot.takeScreenshot("End")
     }
 }

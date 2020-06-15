@@ -129,8 +129,16 @@ static def getGitCommitCount() {
 }
 
 static def getTag() {
-    def process = "git describe --abbrev=0".execute()
-    return process.text.toString().trim()
+    def tagVersion = "$System.env.TAG_VERSION"
+    if (tagVersion == "null") {
+        println "No variable TAG_VERSION specified, I'm using 'git describe --abbrev=0'"
+        def process = "git describe --abbrev=0".execute()
+        tagVersion = process.text.toString().trim()
+    } else {
+        def tagVersionToken = tagVersion.split("/")
+        tagVersion = tagVersionToken[2]
+    }
+    return tagVersion
 }
 
 static def getLatestGitHash() {
@@ -140,6 +148,7 @@ static def getLatestGitHash() {
 
 task decryptPrivate {
     def out = services.get(StyledTextOutputFactory).create("")
+
     def pass = "$System.env.CRYPT_PASS"
     if (pass == "null") {
         out.style(Style.Normal).text("In decrypt files the mandatory ")

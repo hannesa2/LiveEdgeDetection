@@ -37,6 +37,7 @@ jobs:
       - name: Build project
         run: ./gradlew clean assembleRelease --stacktrace
         env:
+          TAG_VERSION: ${{ github.ref }}
           CRYPT_PASS: ${{ secrets.CRYPT_PASS }}
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
           ALIAS_NAME: ${{ secrets.ALIAS_NAME }}

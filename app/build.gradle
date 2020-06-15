@@ -10,7 +10,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
-    ndkVersion "21.2.6472646"
+    ndkVersion "21.1.6352462"
     defaultConfig {
         applicationId "info.hannes.liveedgedetection.demo"
         minSdkVersion 21

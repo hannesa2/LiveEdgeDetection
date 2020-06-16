@@ -15,14 +15,16 @@ buildscript {
 }
 
 ext {
-    Properties properties = new Properties()
-    def propFile = new File('local.properties')
-    if (propFile.exists())
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-    ndkSelectedVersion = properties.getProperty("ndkVersion")
-    if (ndkSelectedVersion == null)
-        ndkSelectedVersion = "21.2.6472646" // default of CI
+    if (System.env.CI == "true") {
+        println "I run on Github CI"
+        ndkSelectedVersion = "21.2.6472646"
+    } else if (System.env.JITPACK == "true") {
+        println "I run on JITPACK CI"
+        ndkSelectedVersion = "21.1.6352462"
+    } else {
+        println "I run somewhere"
+        ndkSelectedVersion = "21.2.6472646"
+    }
 
     println "ndkSelectedVersion=$ndkSelectedVersion"
 }

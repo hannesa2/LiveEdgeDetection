@@ -26,7 +26,7 @@ class DetectApplication : Application() {
             Timber.plant(FileLoggingTree(it, this))
         }
 
-        FirebaseCrashlytics.getInstance().setCustomKey("VERSION_NAME", info.hannes.logcat.BuildConfig.VERSION_NAME)
+        FirebaseCrashlytics.getInstance().setCustomKey("VERSION_NAME", BuildConfig.VERSION_NAME)
         FirebaseCrashlytics.getInstance().setCustomKey("OpenCV", info.hannes.logcat.BuildConfig.VERSION_NAME)
 
         if (!BuildConfig.DEBUG)

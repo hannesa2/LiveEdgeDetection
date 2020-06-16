@@ -23,8 +23,7 @@ class StartActivity : AppCompatActivity() {
         }
 
         textAppVersion.text = "App version   : ${BuildConfig.VERSION_NAME}"
-        textAppVersion.text = "OpenCV version: ${info.hannes.logcat.BuildConfig.VERSION_NAME}"
-
+        textOpenCVVersion.text = "OpenCV version: ${org.opencv.BuildConfig.VERSION_NAME}"
     }
 
 }

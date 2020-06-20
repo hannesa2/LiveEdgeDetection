@@ -17,7 +17,7 @@ buildscript {
 ext {
     if (System.env.CI == "true") {
         println "I run on Github CI"
-        ndkSelectedVersion = "21.2.6472646"
+        ndkSelectedVersion = "21.3.6528147"
     } else if (System.env.JITPACK == "true") {
         println "I run on JITPACK CI"
         ndkSelectedVersion = "21.1.6352462"

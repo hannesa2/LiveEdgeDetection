@@ -18,8 +18,8 @@ class StartActivity : AppCompatActivity() {
         buttonScan.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
         buttonLog.setOnClickListener { startActivity(Intent(this, BothLogActivity::class.java)) }
         buttonCrash.setOnClickListener {
-            Toast.makeText(this, "force crash V2-beta1", Toast.LENGTH_SHORT).show()
-            Handler().postDelayed({ throw RuntimeException("Test Crash V2-beta1") }, 3000)
+            Toast.makeText(this, "force crash ${info.hannes.logcat.BuildConfig.VERSION_NAME}", Toast.LENGTH_SHORT).show()
+            Handler().postDelayed({ throw RuntimeException("Test Crash ${info.hannes.logcat.BuildConfig.VERSION_NAME}") }, 3000)
         }
 
         textAppVersion.text = "App version   : ${BuildConfig.VERSION_NAME}"

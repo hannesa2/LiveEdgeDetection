@@ -59,7 +59,7 @@ jobs:
           path: screenshots/adb
   Check:
     name: Check
-    runs-on: ubuntu-20.04
+    runs-on: macOS-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.3

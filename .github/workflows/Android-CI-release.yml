@@ -25,7 +25,7 @@ jobs:
       - name: show log
         run: git log --oneline
       - name: Install Android SDK
-        uses: hannesa2/action-android/install-sdk@0.0.7.7
+        uses: hannesa2/action-android/install-sdk@0.0.7.9
       - name: Decrypt keystore
         run: ./signing/decrypt.sh
         env:
